@@ -56,6 +56,7 @@
   - [9.3 兩套怎麼接,不打架](#sec-9-3)
   - [9.4 控制成本](#sec-9-4)
 - [10. 在 Claude Code + j-pockit 扁平安裝下的差異](#sec-10)
+  - [10.1 Cursor 專屬 skill 的替代](#sec-10-1)
 - [11. 情境速查與單 session 捷徑](#sec-11)
 - [12. 疑難排解與維護](#sec-12)
   - [12.1 常見狀況](#sec-12-1)
@@ -709,11 +710,33 @@ pstack 原本寫給 Cursor,Claude Code 版靠 adapter 對應<sup>[[6]](#ref-6)</
 | cloud agent | `environment: cloud` | 改用 worktree 隔離。 |
 | Cursor 專屬功能 | Automations、Bugbot、cloud agent 後台 | 跳過,回覆會出現一行 [`Skipped in Claude Code: ...`](#g-skipped-line)。[`/make-bot-ui`](#s-make-bot-ui) 幾乎整個不能用。 |
 | 開 PR | 內建 PR 工具 | 改用 `[gh](#g-gh) pr create`。**本機沒裝 `gh`**,要先裝,或自己在網頁開 PR。 |
-| [`create-skill`](#g-create-skill) | Cursor 內建,[`/reflect`](#s-reflect)、[`/automate-me`](#s-automate-me)、Authoring a skill 會叫 | 不存在。改用 [`writing-for-agents`](#s-writing-for-agents) 當寫法參考(推測)。 |
-| [`/deslop`](#g-deslop) 等 | 屬 cursor-team-kit | 沒裝,相關步驟會跳過。 |
+| [`create-skill`](#g-create-skill) | Cursor 內建,[`/reflect`](#s-reflect)、[`/automate-me`](#s-automate-me)、Authoring a skill 會叫 | 不存在。改用 Claude 的 `skill-creator`,寫法參考 [`writing-for-agents`](#s-writing-for-agents)。見 [10.1](#sec-10-1) |
+| [`/deslop`](#g-deslop)、`control-cli`、`control-ui` | 屬 cursor-team-kit | 沒裝,相關步驟會跳過。替代做法見 [10.1](#sec-10-1) |
 | `/loop` | Cursor 內建的喚醒機制 | Claude Code 也有 `/loop`,細節可能不同(推測)。 |
 | tdd / teach / handoff | pstack 有自己的 [`tdd`](#s-tdd);Pocock 主流程會用 `/handoff` 把 prototype 分出去 | [`/tdd`](#s-tdd) 是 Pocock 版;[`/teach`](#s-teach) 是 pstack 版;`/handoff` 是本機自己的指令,不是 Pocock 版。要跑 prototype 可直接在同一個 session 叫 [`/prototype`](#s-prototype)(推測)。 |
 | [`/benchmark-checklist`](#s-benchmark-checklist) 的工具 | `uptime`、`nproc` 等 Linux 指令 | Windows 上沒有,要換成對應的系統工具(推測)。 |
+
+<a id="sec-10-1"></a>
+### 10.1 Cursor 專屬 skill 的替代
+
+pstack 的 skill 會叫幾個不在 pstack 裡的 skill。其中三個在 cursor-team-kit<sup>[[11]](#ref-11)</sup>,跟 pstack 放在同一個 repo(`cursor/plugins`);另一個是 Cursor 內建。逐個讀過原檔(2026-10-20),結論如下:
+
+| 缺的 skill | 誰會叫 | 原檔內容 | 在 Claude Code 怎麼補 |
+|---|---|---|---|
+| [`/deslop`](#g-deslop) | [`/poteto-mode`](#s-poteto-mode) commit 前;Opening a PR、Multi-phase plan playbook | 約 20 行 prompt:對 main 看 diff,刪多餘註解、不必要的防禦檢查與 try/catch、只為過型別的 `any` cast,深層巢狀改 early return;行為不變、小改、摘要 1-3 句 | 原檔沒有任何 Cursor 專屬內容,**建議直接移植**:`install.ps1` 從同一個 `cursor/plugins` SHA 多裝 `cursor-team-kit/skills/deslop`,裝好後 poteto-mode 叫得到。還沒移植之前,commit 前打 Claude 內建的 `/simplify`(範圍比 deslop 大,會一併做重用、效能檢查)或直接講「deslop it:刪多餘註解、防禦檢查、`any` cast」;註解另交給 [`/no-comments`](#s-no-comments) |
+| `control-cli` | [`/poteto-mode`](#s-poteto-mode) 交付 CLI 時;Multi-phase plan | 用 `tmux` 或 Python `pty` 驅動 CLI / TUI,一次送一個鍵、等畫面、存紀錄與 profile | 一樣可以照原檔移植,但 `tmux` 和 Python `pty` 在 Windows 都不能用,要在 WSL 跑(推測)。只在 Windows 的話,改用 Claude 內建的 `/run` |
+| `control-ui` | [`/poteto-mode`](#s-poteto-mode) 交付 UI 時;Multi-phase plan | 用 Playwright / CDP 驅動網頁或 Electron:截圖、操作一步、再截圖驗證 | 沒有 Cursor 專屬內容,可以照原檔移植,需要先裝 Playwright。不想裝就用 `/run` |
+| [`create-skill`](#g-create-skill) | [`/reflect`](#s-reflect)、[`/automate-me`](#s-automate-me)、Authoring a skill playbook、[`/poteto-mode`](#s-poteto-mode) 寫 SKILL.md 時 | Cursor 內建,沒有原檔可搬 | 用 Claude 的 `skill-creator`:它也有 draft / test / iterate 迴圈和 description 調整,剛好對上 [`/reflect`](#s-reflect) 要的兩種用法。看到 AI 說「交給 create-skill」時,改打 `/skill-creator`(或 `anthropic-skills:skill-creator`),寫法規範仍參考 [`writing-for-agents`](#s-writing-for-agents) |
+
+另外三件事不用補:
+
+- Cursor 內建的 babysit:[`/poteto-mode`](#s-poteto-mode) 的 Babysit playbook 本來就寫明不走它。
+- Bugbot、Automations:adapter 規定跳過<sup>[[6]](#ref-6)</sup>。
+- cursor-team-kit 其他 15 個 skill(`fix-ci`、`loop-on-ci`、`review-and-ship` 等):pstack 沒有叫它們。
+
+[`/poteto-help`](#s-poteto-help) 的回答會照 Cursor 的說法講:會叫你用 `/pstack:` 前綴,也會說 `/deslop`、`control-*` 在 cursor-team-kit、`/create-skill` 是 Cursor 內建。這幾句在這裡對照本節的表看。
+
+移植的做法:`install.ps1` 加一份 cursor-team-kit 白名單(`deslop`,要的話再加 `control-ui`、`control-cli`),從已鎖定 SHA 的 `cursor/plugins` 抓,不用另外 clone。改 `install.ps1` 之前要先拍板;本文件只記建議,`install.ps1` 還沒改。
 
 ---
 
@@ -797,6 +820,7 @@ python tools/docs/md2htm.py
 | <a id="ref-8"></a>#8 | 上游事實查證紀錄 | [research/upstream-facts.md](research/upstream-facts.md) |
 | <a id="ref-9"></a>#9 | 為什麼扁平安裝而不用 plugin | [adr/0001-flat-install-not-plugin.md](adr/0001-flat-install-not-plugin.md) |
 | <a id="ref-10"></a>#10 | 本機已裝 SKILL.md 實讀([`/how`](#s-how)、[`/setup-pstack`](#s-setup-pstack)、[`pr`](#s-pr)、各 skill 的 git 用法、`disable-model-invocation` 與互叫關係),版本照 `versions.lock` | `~/.claude/skills/<name>/SKILL.md` |
+| <a id="ref-11"></a>#11 | cursor-team-kit(`deslop`、`control-cli`、`control-ui` 原檔) | [cursor/plugins — cursor-team-kit/skills](https://github.com/cursor/plugins/tree/main/cursor-team-kit/skills) |
 
 ---
 
@@ -852,8 +876,8 @@ python tools/docs/md2htm.py
 | <a id="g-custom-mode"></a>`Custom Mode` | Cursor 功能 | Cursor 可以把 /poteto-mode 設成每輪自動套用的模式;Claude Code 沒有。 [[1]](#ref-1) |
 | <a id="g-skipped-line"></a>`Skipped in Claude Code: ...` | 回覆格式 | adapter 規定:步驟需要 Cursor 專屬功能時,印這一行後繼續下一步。 [[6]](#ref-6) |
 | <a id="g-gh"></a>`gh` | CLI | GitHub 官方命令列工具;pstack 在 Claude Code 下用 gh pr create 開 PR。本機沒裝。 [[6]](#ref-6) |
-| <a id="g-create-skill"></a>`create-skill` | Cursor skill | Cursor 內建的寫 skill 工具,Claude Code 沒有。 [[6]](#ref-6) |
-| <a id="g-deslop"></a>`/deslop` | cursor-team-kit skill | Cursor 團隊套件裡的去 AI 腔工具,j-pockit 沒裝。 [[6]](#ref-6) |
+| <a id="g-create-skill"></a>`create-skill` | Cursor skill | Cursor 內建的寫 skill 工具,Claude Code 沒有,改用 `skill-creator`(見 [10.1](#sec-10-1))。 [[6]](#ref-6) |
+| <a id="g-deslop"></a>`/deslop` | cursor-team-kit skill | Cursor 團隊套件裡清程式碼 AI 腔的 skill:對 main 看 diff,刪多餘註解、不必要的防禦檢查、`any` cast。j-pockit 沒裝;原檔沒有 Cursor 專屬內容,可以直接移植,替代做法見 [10.1](#sec-10-1)。 [[11]](#ref-11) |
 
 ---
 
@@ -879,8 +903,8 @@ pstack 的 skill 之間互相引用,是叫模型去 Read 對方的 SKILL.md(adap
 | skill | 調用 | 做什麼(怎麼做) | 何時用 / 頻率 | 範圍與限制 | 註解 |
 |---|---|---|---|---|---|
 | <a id="s-setup-pstack"></a>`/setup-pstack` | 你 / 模型 | 列出可用模型,問你 budget,把每個角色對到一個模型,寫進 `~/.claude/rules/pstack-models.md`;最後問要不要建專案的驗證 skill | 裝好後跑一次;換電腦、換帳號、想改 budget 或模型時再跑 | 只寫家目錄的 rule 檔,跨專案共用;開新 session 才生效 | 可 `-UserOnly`。細節見 [1.5](#sec-1-5) |
-| <a id="s-poteto-mode"></a>`/poteto-mode` | 你 | 把任務對到 23 套 playbook 之一,步驟原樣抄成待辦;依觸發條件拉 [`/how`](#s-how)、[`/architect`](#s-architect)、[`/interrogate`](#s-interrogate) 等;子工作派 `poteto-agent` | 要嚴謹做完的非小任務;每個任務開頭打一次 | 任何語言、整個 repo;會開不少 subagent;`deslop`、`create-skill` 本機沒有,相關步驟跳過 | Claude Code 下不會常駐,每個任務要重打。見 [5.1](#sec-5-1) |
-| <a id="s-poteto-help"></a>`/poteto-help` | 你 | 回答該用哪個 pstack skill 或 playbook,附一段可直接送出的 prompt;只回答,不動手 | 不知道用哪個時;偶爾 | 唯讀;內容以 Cursor 為主 | 規劃類改問 [`/ask-matt`](#s-ask-matt) |
+| <a id="s-poteto-mode"></a>`/poteto-mode` | 你 | 把任務對到 23 套 playbook 之一,步驟原樣抄成待辦;依觸發條件拉 [`/how`](#s-how)、[`/architect`](#s-architect)、[`/interrogate`](#s-interrogate) 等;子工作派 `poteto-agent` | 要嚴謹做完的非小任務;每個任務開頭打一次 | 任何語言、整個 repo;會開不少 subagent;`deslop`、`control-*`、`create-skill` 本機沒有,相關步驟跳過,替代見 [10.1](#sec-10-1) | Claude Code 下不會常駐,每個任務要重打。見 [5.1](#sec-5-1) |
+| <a id="s-poteto-help"></a>`/poteto-help` | 你 | 回答該用哪個 pstack skill 或 playbook,附一段可直接送出的 prompt;只回答,不動手 | 不知道用哪個時;偶爾 | 唯讀;內容以 Cursor 為主,提到 `/pstack:` 前綴、`/deslop`、`/create-skill` 時對照 [10.1](#sec-10-1) | 規劃類改問 [`/ask-matt`](#s-ask-matt) |
 | <a id="s-how"></a>`/how` | 你 | 簡單題派 1 個 explainer;複雜題先派 2 到 4 個唯讀 explorer 分頭讀,再由 1 個 explainer 整合成五段:概觀、關鍵概念、流程、東西在哪、陷阱 | 改程式前先搞懂系統,或問「新東西放哪」;每任務 | 只讀程式碼,不讀 GLOSSARY / ADR;任何語言、整個 repo;結果只在對話,不落檔 | 見 [1.6](#sec-1-6) |
 | <a id="s-why"></a>`/why` | 你 | 先用 git blame / log 建錨點,依接上的 [MCP](#g-mcp) 各派 1 個 investigator 查 issue、文件、聊天等,最後整合成附信心標記的結論 | 問設計理由、regression、某個數字哪來的;偶爾 | 要版控歷史(SVN 用 `svn blame`);沒 `gh` 就缺 PR 討論 | 見 [5.3](#sec-5-3) |
 | <a id="s-teach"></a>`/teach` | 你 | 先自己讀程式抓方向,再平行跑 [`/how`](#s-how) 和 [`/why`](#s-why),用白話加逐步長大的圖講給你聽 | 想真正弄懂某個變更或子系統;偶爾 | 唯讀;成本等於 [`/how`](#s-how) + [`/why`](#s-why) | j-pockit 裝 pstack 版(Pocock 同名版不裝) |
@@ -905,9 +929,9 @@ pstack 的 skill 之間互相引用,是叫模型去 Read 對方的 SKILL.md(adap
 | <a id="s-sharpen"></a>`/sharpen` | 你 | 列出專家會多做什麼、原始素材、方法、外部判準,據此重寫你的 prompt;不執行任務 | 下重要 prompt 之前;偶爾 | 純對話,只產出 prompt | — |
 | <a id="s-in-your-own-words"></a>`/in-your-own-words` | 你 | 要模型用自己的話重述你的目標和你要解決的問題 | 開工前確認沒誤會;偶爾 | 純對話 | — |
 | <a id="s-bro"></a>`/bro` | 你 | 把上一則回覆用不帶術語的白話重講 | 看不懂回覆時;隨時 | 純對話 | Pocock 的對應是 [`/wait-what`](#s-wait-what) |
-| <a id="s-reflect"></a>`/reflect` | 你 | 3 個 reviewer 讀本次對話,整合成 Accepted / Rejected / Backlog,你核准後才改 skill | 任務結束、想把教訓寫進 skill 時;偶爾 | 只讀本 workspace 紀錄;4 個 subagent;原本依賴 Cursor 的 `create-skill`,這裡沒有 | 見 [6](#sec-6) |
+| <a id="s-reflect"></a>`/reflect` | 你 | 3 個 reviewer 讀本次對話,整合成 Accepted / Rejected / Backlog,你核准後才改 skill | 任務結束、想把教訓寫進 skill 時;偶爾 | 只讀本 workspace 紀錄;4 個 subagent;原本依賴 Cursor 的 `create-skill`,這裡改用 `skill-creator`(見 [10.1](#sec-10-1)) | 見 [6](#sec-6) |
 | <a id="s-correct"></a>`/correct` | 你 | 從 commit、revert、review 找一再犯的錯,依序用架構、型別、lint、測試、文件來擋,並證明新檢查抓得到過去真的錯 | 同一類錯被糾正第二次時 | 整個 repo;要版控歷史;會改程式和 CI | 見 [6](#sec-6) |
-| <a id="s-automate-me"></a>`/automate-me` | 你 | 平行從你的對話紀錄挖工作習慣,加上問答,寫成或更新你自己的 `<handle>-mode` skill | 用一陣子後,想把個人風格固定下來;偶爾 | 依賴 Cursor `create-skill`、git、PR;這裡要手動補步驟(推測) | — |
+| <a id="s-automate-me"></a>`/automate-me` | 你 | 平行從你的對話紀錄挖工作習慣,加上問答,寫成或更新你自己的 `<handle>-mode` skill | 用一陣子後,想把個人風格固定下來;偶爾 | 依賴 Cursor `create-skill`、git、PR;`create-skill` 改用 `skill-creator`(見 [10.1](#sec-10-1)),其餘要手動補步驟(推測) | — |
 | <a id="s-make-bot-ui"></a>`/make-bot-ui` | 你 | 建一個按鈕頁,按鈕事件經 webhook 喚醒 Cursor 的 bot | 很少 | 只能在 Cursor 用,Claude Code 下幾乎所有步驟都會跳過 | 可以忽略 |
 | <a id="s-principles"></a>`principle-*`(24 個) | 你 | 每張是一條短原則;[`/poteto-mode`](#s-poteto-mode) 依情境讀對應的那幾張套用,並在回覆點名。清單:attack-the-premise、boundary-discipline、build-the-lever、encode-lessons-in-structure、exhaust-the-design-space、experience-first、explain-the-number、fix-root-causes、foundational-thinking、guard-the-context-window、laziness-protocol、make-operations-idempotent、migrate-callers-then-delete-legacy-apis、minimize-reader-load、model-the-domain、never-block-on-the-human、outcome-oriented-execution、prove-it-works、redesign-from-first-principles、separate-before-serializing-shared-state、sequence-verifiable-units、subtract-before-you-add、test-behavior-not-implementation、type-system-discipline | 被 [`/poteto-mode`](#s-poteto-mode) 引用時;你也可以在 prompt 點名修正方向 | 純規則文件,任何語言 | 白話對照見 [9.2](#sec-9-2) |
 
