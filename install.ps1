@@ -4,10 +4,24 @@
 # Usage:
 #   powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1           # install exactly what versions.lock pins
 #   powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -Update   # bump versions.lock to upstream latest, then install
+#   powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -UserOnly pr,wizard
+#       # after install, add 'disable-model-invocation: true' to these SKILL.md files (only you can call them)
 
-param([switch]$Update)
+param(
+    [switch]$Update,
+    [string[]]$UserOnly = @()
+)
 
 $ErrorActionPreference = 'Stop'
+
+# -File passes "a,b" as one string; split it here.
+$UserOnly = @($UserOnly | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim().TrimStart('/') } | Where-Object { $_ })
+
+# Model-callable skills that can become user-only without breaking a skill chain.
+# prototype / research: only /wayfinder calls them; safe if you never use /wayfinder.
+# Never allowed: grilling, domain-modeling, tdd, code-review, codebase-design, writing-for-agents
+# (Pocock entry skills call them through the Skill tool, which refuses user-only skills).
+$UserOnlyAllowed = @('setup-pstack', 'diagnosing-bugs', 'wizard', 'pr', 'prototype', 'research')
 
 # --- Exclusions (same-name conflicts) ---
 $PstackExclude = @(
@@ -127,7 +141,27 @@ function Install-Skill([System.IO.DirectoryInfo]$Src) {
     Copy-Item -LiteralPath $Src.FullName -Destination $dst -Recurse
 }
 
+# Insert 'disable-model-invocation: true' as the first frontmatter line. Returns $false if already set.
+function Set-UserOnly([string]$Name) {
+    $path = Join-Path (Join-Path $SkillsDir $Name) 'SKILL.md'
+    if (-not (Test-Path -LiteralPath $path)) { Fail "-UserOnly: $path not found" }
+    $text = [IO.File]::ReadAllText($path)
+    if ($text -notmatch '^---\r?\n') { Fail "-UserOnly: $path has no YAML frontmatter" }
+    $end = $text.IndexOf("`n---", 3)
+    if ($end -lt 0) { Fail "-UserOnly: $path frontmatter is not closed" }
+    if ($text.Substring(0, $end) -match '(?m)^disable-model-invocation:\s*true\s*$') { return $false }
+    $nl = if ($text.StartsWith("---`r`n")) { "`r`n" } else { "`n" }
+    $first = $text.IndexOf("`n") + 1
+    $new = $text.Substring(0, $first) + "disable-model-invocation: true$nl" + $text.Substring($first)
+    [IO.File]::WriteAllText($path, $new, (New-Object Text.UTF8Encoding $false))
+    return $true
+}
+
 # --- Preflight: fail before touching anything ---
+$badUserOnly = @($UserOnly | Where-Object { $UserOnlyAllowed -notcontains $_ })
+if ($badUserOnly.Count -gt 0) {
+    Fail "-UserOnly does not accept: $($badUserOnly -join ', '). Allowed: $($UserOnlyAllowed -join ', ') (others would break a skill chain)"
+}
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Fail 'git not found in PATH' }
 if (-not (Test-Path -LiteralPath $ClaudeDir)) { Fail "$ClaudeDir does not exist" }
 $lock = Read-Lock
@@ -213,12 +247,25 @@ try {
     }
     [IO.File]::WriteAllText($ManifestPath, (($installed -join "`n") + "`n"), (New-Object Text.UTF8Encoding $false))
 
+    # Optional: make chosen skills user-only. Upstream files are fresh copies, so this reruns every install.
+    $userOnlyDone = @()
+    foreach ($name in $UserOnly) {
+        if ($installed -notcontains $name) { Fail "-UserOnly: '$name' is not in this install" }
+        [void](Set-UserOnly $name)
+        $userOnlyDone += $name
+    }
+
     # --- Report ---
     Write-Host ''
     Write-Host "pstack @ $($lock['pstack']): installed $($pstackSkills.Count) skills (excluded: $($PstackExclude -join ', '))"
     Write-Host "mattpocock-skills @ $($lock['mattpocock-skills']): installed $($pocockSkills.Count) skills (excluded: $($PocockExclude -join ', '))"
     Write-Host "docs: $docsCount files copied to $DocsDir"
     Write-Host "agents: $($agentNames -join ', ') copied to $AgentsDir"
+    if ($userOnlyDone.Count -gt 0) {
+        Write-Host "user-only (disable-model-invocation: true): $($userOnlyDone -join ', '). Pass the same -UserOnly on every reinstall."
+    } else {
+        Write-Host 'user-only: none (SKILL.md files unchanged)'
+    }
     if ($Archived.Count -gt 0) {
         Write-Host "archived $($Archived.Count):"
         foreach ($a in $Archived) { Write-Host "  $a" }

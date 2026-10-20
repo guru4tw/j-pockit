@@ -2,7 +2,7 @@
 
 把兩套 Claude Code skill set 扁平裝進 `~/.claude/skills/`,用短名直接叫(`/how`、`/grilling`,不是 `/pstack:how`),版本釘在 `versions.lock`,換機器跑一支腳本就裝出一樣的東西。
 
-開發流程圖:[docs/workflow.md](docs/workflow.md)(GitHub 上直接看;本機版 [docs/workflow.htm](docs/workflow.htm) 用瀏覽器開)。
+使用指南:[docs/workflow.md](docs/workflow.md)(GitHub 上直接看;本機版 [docs/workflow.htm](docs/workflow.htm) 用瀏覽器開,圖裡的 skill 可點)。第 0 節有安裝和一個完整小例子,附錄 C 一列一個 skill,寫明誰能叫、何時用、限制。
 
 ## 這是什麼
 
@@ -15,9 +15,10 @@ repo 裡只有:
 
 - `install.ps1`:唯一的安裝 / 更新腳本
 - `versions.lock`:兩行 `key=value`,pstack 釘 40 碼 commit SHA,mattpocock-skills 釘 tag
-- 說明文件:`GLOSSARY.md`、`docs/`
+- 說明文件:`GLOSSARY.md`、`docs/`(`workflow.md` 是原稿,`workflow.htm` 和兩張 SVG 由腳本產生)
+- `tools/docs/`:產文件的 Python 腳本(`gen_flow.py` 畫流程圖、`md2htm.py` 產 htm、`check_links.py` 檢查站內連結)
 
-不放任何上游 skill 內容,也不改任何 SKILL.md。為什麼不用官方 plugin:見 [docs/adr/0001-flat-install-not-plugin.md](docs/adr/0001-flat-install-not-plugin.md)。
+不放任何上游 skill 內容;除非帶 `-UserOnly`,不改任何 SKILL.md。為什麼不用官方 plugin:見 [docs/adr/0001-flat-install-not-plugin.md](docs/adr/0001-flat-install-not-plugin.md)。
 
 ## 安裝
 
@@ -58,11 +59,19 @@ git push
 
 其他機器 `git pull` 後跑不帶 `-Update` 的 install,就拿到同一版。不帶 `-Update` 時嚴格照 lock,不連線查最新。
 
+## 改成只有你能叫(-UserOnly)
+
+```
+powershell -NoProfile -ExecutionPolicy Bypass -File install.ps1 -UserOnly pr,wizard
+```
+
+裝完替指定 skill 的 SKILL.md frontmatter 補 `disable-model-invocation: true`,模型就不會自己挑它,也省掉它描述佔的 context。只接受 `setup-pstack`、`diagnosing-bugs`、`wizard`、`pr`、`prototype`、`research`;其他 Pocock 模型可叫的 skill 被入口 skill 串著,改了會斷鏈,腳本直接拒絕。重裝會換回上游原檔,所以每次都要帶同一組;要還原就不帶它重裝。`-UserOnly` 可以和 `-Update` 一起用。
+
 ## 裝完後兩步
 
 | 指令 | 頻率 | 做什麼 |
 |---|---|---|
-| `/setup-pstack` | 一台機器一次 | 依可用模型與 reasoning budget 寫 `~/.claude/rules/pstack-models.md` |
+| `/setup-pstack` | 每台機器、每個帳號一次(改 budget 時重跑) | 依可用模型與 reasoning budget 寫 `~/.claude/rules/pstack-models.md` |
 | `/setup-matt-pocock-skills` | 一個 repo 一次 | 設定該 repo 的 issue tracker、triage label、domain doc 位置 |
 
 兩者沒有先後,也不互斥。
@@ -74,7 +83,7 @@ v1.3 起 Pocock 把 `CONTEXT.md` 改名 `GLOSSARY.md`(`CONTEXT-MAP.md` → `GLOS
 | 階段 | 用哪套 | 指令 |
 |---|---|---|
 | 規劃 / 規格 / 票 | Pocock | `/grill-with-docs` → `/to-spec` → `/to-tickets` |
-| 執行 | pstack 為主 | `/poteto-mode` 常駐;`/how` 理解既有程式、`/interrogate` 挑戰設計、`/swarm` 平行工作、`/unslop` 修文字。逐票做時 Pocock `/implement` 仍可用(它會叫 `/tdd`、`/code-review`) |
+| 執行 | pstack 為主 | 每個任務開頭打 `/poteto-mode`(Claude Code 下不會常駐);`/how` 理解既有程式、`/interrogate` 挑戰設計、`/swarm` 平行工作、`/unslop` 修文字。逐票做時 Pocock `/implement` 仍可用(它會叫 `/tdd`、`/code-review`) |
 | 驗證 / 審查 / PR | pstack 為主 | 同上;Pocock `/code-review`、`pr` 可並用 |
 | 回顧 | Pocock | `/retro`;pstack `/reflect` 可替代 |
 
