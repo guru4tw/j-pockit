@@ -1,0 +1,130 @@
+<svg viewBox="0 0 980 1224" xmlns="http://www.w3.org/2000/svg" width="980" height="1224" font-family="Segoe UI, Microsoft JhengHei, PingFang TC, Noto Sans CJK TC, sans-serif">
+<style>.flowlink:hover tspan{fill:#d0602a}</style><rect width="980" height="1224" fill="#fff"/><defs><marker id="ah-file" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><polygon points="0 0, 10 3, 0 6" fill="#999"/></marker></defs>
+<rect x="276" y="632" width="428" height="428" rx="8" fill="none" stroke="#c88a5a" stroke-width="1.2" stroke-dasharray="6,4"/>
+<rect x="10" y="10" width="300" height="54" rx="6" fill="#4a9a6a20" stroke="#4a9a6a" stroke-width="1.5"/>
+<text x="160.0" y="33.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >0a. </tspan><a href="workflow.htm#s-setup-pstack" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/setup-pstack</tspan></a></text>
+<text x="160.0" y="49.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">每台電腦 × 每個使用者帳號一次</tspan></text>
+<line x1="160" y1="64" x2="160" y2="82" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M10 84 H298 L310 96 V132 H10 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M298 84 V96 H310" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="160.0" y="104.0" font-size="11" text-anchor="middle" fill="#222"><tspan font-family="Consolas, monospace">~/.claude/rules/pstack-models.md</tspan></text>
+<text x="160.0" y="120.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">全機共用,跨專案、跨 repo、Git/SVN 都吃</tspan></text>
+<rect x="340" y="10" width="300" height="54" rx="6" fill="#4a9a6a20" stroke="#4a9a6a" stroke-width="1.5"/>
+<text x="490.0" y="33.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >0b. </tspan><a href="workflow.htm#s-setup-matt-pocock-skills" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/setup-matt-pocock-skills</tspan></a></text>
+<text x="490.0" y="49.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">每個 working copy 一次;tracker 選 Local markdown</tspan></text>
+<line x1="490" y1="64" x2="490" y2="82" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M340 84 H628 L640 96 V132 H340 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M628 84 V96 H640" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="104.0" font-size="11" text-anchor="middle" fill="#222"><tspan font-family="Consolas, monospace">docs/agents/*.md + CLAUDE.md</tspan></text>
+<text x="490.0" y="120.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">+ 自寫 VCS: SVN 指令對照段</tspan></text>
+<rect x="670" y="10" width="300" height="54" rx="6" fill="#4a9a6a20" stroke="#4a9a6a" stroke-width="1.5"/>
+<text x="820.0" y="33.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >0c. </tspan><a href="workflow.htm#s-create-verification-skill" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/create-verification-skill</tspan></a></text>
+<text x="820.0" y="49.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">每個專案一次(選用)</tspan></text>
+<line x1="820" y1="64" x2="820" y2="82" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M670 84 H958 L970 96 V132 H670 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M958 84 V96 H970" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="820.0" y="104.0" font-size="11" text-anchor="middle" fill="#222"><tspan font-family="Consolas, monospace">.claude/skills/verify-&lt;app&gt;/</tspan></text>
+<text x="820.0" y="120.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">這個專案怎麼啟動、怎麼驗</tspan></text>
+<text x="490" y="156" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">↓ 三個設定產出不在主流程裡傳遞;之後每個階段開工時由 skill 自己去讀(模型 / tracker 位置 / 驗證方法)</tspan></text>
+<path d="M290 172 H678 L690 184 V208 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 172 V184 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="194.0" font-size="11" text-anchor="middle" fill="#222"><tspan >輸入:需求 / 想法(口述或既有 issue)</tspan></text>
+<line x1="490.0" y1="208" x2="490.0" y2="224" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="290" y="226" width="400" height="66" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+<text x="490.0" y="247.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >1. 對齊 · </tspan><a href="workflow.htm#s-grill-with-docs" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/grill-with-docs</tspan></a></text>
+<text x="490.0" y="263.0" font-size="11" text-anchor="middle" fill="#222"><tspan >內部叫 </tspan><a href="workflow.htm#s-grilling" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">grilling</tspan></a><tspan > + </tspan><a href="workflow.htm#s-domain-modeling" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">domain-modeling</tspan></a></text>
+<text x="490.0" y="279.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">讀:需求、程式碼、既有 GLOSSARY.md / ADR</tspan></text>
+<line x1="490.0" y1="292" x2="490.0" y2="308" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="730" y="222" width="240" height="40" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="850.0" y="238.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-prototype" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/prototype</tspan></a><tspan >(選用)</tspan></text>
+<text x="850.0" y="254.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">跑一下才知道的問題</tspan></text>
+<path d="M730 270 H958 L970 282 V300 H730 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M958 270 V282 H970" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="850.0" y="289.0" font-size="11" text-anchor="middle" fill="#222"><tspan >結論帶回對話;原型另存一個資料夾</tspan></text>
+<line x1="690" y1="242" x2="728" y2="242" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<line x1="730" y1="285" x2="692" y2="276" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="10" y="234" width="240" height="40" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="130.0" y="250.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-grill-me" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/grill-me</tspan></a><tspan > 替代</tspan></text>
+<text x="130.0" y="266.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">不在 repo 裡時用,不留檔</tspan></text>
+<path d="M290 310 H678 L690 322 V362 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 310 V322 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="332.0" font-size="11" text-anchor="middle" fill="#222"><tspan font-family="Consolas, monospace">GLOSSARY.md、docs/adr/NNNN-*.md</tspan></text>
+<text x="490.0" y="348.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">+ 對話裡的共同理解(1→2→3 同一段 context,不清)</tspan></text>
+<line x1="490.0" y1="362" x2="490.0" y2="378" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="290" y="380" width="400" height="54" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+<text x="490.0" y="403.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >2. 規格 · </tspan><a href="workflow.htm#s-to-spec" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/to-spec</tspan></a></text>
+<text x="490.0" y="419.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">讀:上一步的檔 + 對話 + repo;只彙整,不再問</tspan></text>
+<line x1="490.0" y1="434" x2="490.0" y2="450" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M290 452 H678 L690 464 V492 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 452 V464 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="476.0" font-size="11" text-anchor="middle" fill="#222"><tspan font-family="Consolas, monospace">.scratch/&lt;feature&gt;/spec.md</tspan></text>
+<line x1="490.0" y1="492" x2="490.0" y2="508" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="290" y="510" width="400" height="54" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+<text x="490.0" y="533.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >3. 切票 · </tspan><a href="workflow.htm#s-to-tickets" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/to-tickets</tspan></a></text>
+<text x="490.0" y="549.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">讀:spec;切法和相依先跟你確認</tspan></text>
+<line x1="490.0" y1="564" x2="490.0" y2="580" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M290 582 H678 L690 594 V622 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 582 V594 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="606.0" font-size="11" text-anchor="middle" fill="#222"><tspan >票 × N:.scratch/&lt;feature&gt;/issues/NN-*.md(Status / Blocked by)</tspan></text>
+<line x1="490.0" y1="622" x2="490.0" y2="638" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="290" y="640" width="400" height="78" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+<text x="490.0" y="667.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >4. 執行 · 每張票開新 context</tspan></text>
+<text x="490.0" y="683.0" font-size="11" text-anchor="middle" fill="#222"><a href="workflow.htm#s-poteto-mode" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/poteto-mode</tspan></a><tspan > 做票 #N  或  </tspan><a href="workflow.htm#s-implement" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/implement</tspan></a></text>
+<text x="490.0" y="699.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">讀:一張票 + GLOSSARY + 程式碼</tspan></text>
+<line x1="490.0" y1="718" x2="490.0" y2="734" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="730" y="634" width="240" height="26" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+<text x="850.0" y="651.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-how" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/how</tspan></a><tspan > 讀程式 → 心智模型(只在對話)</tspan></text>
+<line x1="690" y1="654" x2="728" y2="647" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="730" y="664" width="240" height="26" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+<text x="850.0" y="681.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-architect" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/architect</tspan></a><tspan >(跨函式邊界時)</tspan></text>
+<line x1="690" y1="678" x2="728" y2="677" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="730" y="694" width="240" height="26" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+<text x="850.0" y="711.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-tdd" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/tdd</tspan></a><tspan > 紅 → 綠,一次一個測試</tspan></text>
+<line x1="690" y1="702" x2="728" y2="707" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="10" y="674" width="240" height="46" rx="6" fill="#99999920" stroke="#999999" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="130.0" y="693.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-implement-spec" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/implement-spec</tspan></a><tspan > 不建議</tspan></text>
+<text x="130.0" y="709.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">要 worktree + branch + merge</tspan></text>
+<path d="M290 736 H678 L690 748 V778 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 736 V748 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="761.0" font-size="11" text-anchor="middle" fill="#222"><tspan >working copy 修改 + 測試(svn commit 到 trunk 或 svn copy 的 branch)</tspan></text>
+<line x1="490.0" y1="778" x2="490.0" y2="794" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="290" y="796" width="400" height="66" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+<text x="490.0" y="817.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >5. 驗證 / 審查</tspan></text>
+<text x="490.0" y="833.0" font-size="11" text-anchor="middle" fill="#222"><a href="workflow.htm#s-code-review" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/code-review</tspan></a><tspan >(基準 rN:svn diff -r rN)</tspan><tspan > · </tspan><a href="workflow.htm#s-interrogate" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/interrogate</tspan></a></text>
+<text x="490.0" y="849.0" font-size="11" text-anchor="middle" fill="#222"><a href="workflow.htm#s-blast-radius" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/blast-radius</tspan></a><tspan > · </tspan><a href="workflow.htm#g-verify-app" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">verify-&lt;app&gt;</tspan></a><tspan fill="#888">(讀 0c)</tspan></text>
+<line x1="490.0" y1="862" x2="490.0" y2="878" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="730" y="800" width="240" height="26" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+<text x="850.0" y="817.0" font-size="12.5" text-anchor="middle" fill="#222"><a href="workflow.htm#s-no-comments" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/no-comments</tspan></a><tspan > · </tspan><a href="workflow.htm#s-unslop" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/unslop</tspan></a></text>
+<line x1="690" y1="813" x2="728" y2="813" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M290 880 H678 L690 892 V920 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 880 V892 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="904.0" font-size="11" text-anchor="middle" fill="#222"><tspan >review 結論:Act on / Consider / Dismissed + 修正 修改</tspan></text>
+<line x1="490.0" y1="920" x2="490.0" y2="936" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M 290 900 H 264 V 680 H 288" fill="none" stroke="#999" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#ah-file)"/>
+<text x="260" y="800.0" font-size="10.5" text-anchor="end" fill="#222"><tspan fill="#888">有 Act on → 回 4 修</tspan></text>
+<rect x="290" y="938" width="400" height="56" rx="6" fill="#8a5ac820" stroke="#8a5ac8" stroke-width="1.5"/>
+<text x="490.0" y="962.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >6. 送審 / 提交(沒有 PR)</tspan></text>
+<text x="490.0" y="978.0" font-size="11" text-anchor="middle" fill="#222"><tspan fill="#888">說明照 </tspan><a href="workflow.htm#s-pr" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">pr</tspan></a><tspan fill="#888"> skill 格式寫;附 svn diff patch</tspan></text>
+<line x1="490.0" y1="994" x2="490.0" y2="1010" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<rect x="730" y="944" width="240" height="44" rx="6" fill="#99999920" stroke="#999999" stroke-width="1.5" stroke-dasharray="5,3"/>
+<text x="850.0" y="962.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >Opening a PR / Babysit /</tspan></text>
+<text x="850.0" y="978.0" font-size="11" text-anchor="middle" fill="#222"><tspan >Shipping / Autopilot:不適用</tspan></text>
+<path d="M290 1012 H678 L690 1024 V1052 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 1012 V1024 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="1036.0" font-size="11" text-anchor="middle" fill="#222"><tspan >patch + review 說明 → 審過後 svn commit -m</tspan></text>
+<line x1="490.0" y1="1052" x2="490.0" y2="1068" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<text x="272" y="646" font-size="10.5" text-anchor="end" fill="#222"><a href="workflow.htm#s-poteto-mode" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/poteto-mode</tspan></a><tspan fill="#888"> 管的範圍</tspan></text>
+<text x="272" y="660" font-size="10.5" text-anchor="end" fill="#222"><tspan fill="#888">(每個任務重打)</tspan></text>
+<path d="M 690 1032 H 710 V 708 H 692" fill="none" stroke="#999" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#ah-file)"/>
+<text x="714" y="1016" font-size="10.5" text-anchor="start" fill="#222"><tspan fill="#888">下一張票 → 回 4</tspan></text>
+<rect x="290" y="1070" width="400" height="56" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+<text x="490.0" y="1094.0" font-size="12.5" text-anchor="middle" fill="#222"><tspan >7. 回顧 · </tspan><a href="workflow.htm#s-retro" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/retro</tspan></a></text>
+<text x="490.0" y="1110.0" font-size="11" text-anchor="middle" fill="#222"><a href="workflow.htm#s-reflect" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/reflect</tspan></a><tspan > 改 skill · </tspan><a href="workflow.htm#s-correct" class="flowlink"><tspan font-family="Consolas, monospace" fill="#3a86c8" text-decoration="underline">/correct</tspan></a><tspan > 改 repo</tspan></text>
+<line x1="490.0" y1="1126" x2="490.0" y2="1142" stroke="#999" stroke-width="1.4" marker-end="url(#ah-file)"/>
+<path d="M290 1144 H678 L690 1156 V1184 H290 Z" fill="#88888814" stroke="#888888" stroke-width="1.2"/><path d="M678 1144 V1156 H690" fill="none" stroke="#888888" stroke-width="1"/>
+<text x="490.0" y="1168.0" font-size="11" text-anchor="middle" fill="#222"><tspan >CLAUDE.md、lint / 測試、skill 修正 → 下一輪開工時讀到</tspan></text>
+<path d="M 690 1164 H 975 V 108 H 972" fill="none" stroke="#999" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#ah-file)"/>
+<text x="970" y="1180" font-size="10.5" text-anchor="end" fill="#222"><tspan fill="#888">回饋到環境(第 0 列的檔)</tspan></text>
+<rect x="40" y="1200" width="14" height="12" fill="#3a86c820" stroke="#3a86c8"/>
+<text x="60" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan >Pocock</tspan></text>
+<rect x="140" y="1200" width="14" height="12" fill="#c88a5a20" stroke="#c88a5a"/>
+<text x="160" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan >pstack</tspan></text>
+<rect x="240" y="1200" width="14" height="12" fill="#4a9a6a20" stroke="#4a9a6a"/>
+<text x="260" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan >設定</tspan></text>
+<rect x="340" y="1200" width="14" height="12" fill="#8a5ac820" stroke="#8a5ac8"/>
+<text x="360" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan >SVN 改法</tspan></text>
+<rect x="440" y="1200" width="14" height="12" fill="#99999920" stroke="#999999"/>
+<text x="460" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan >SVN 不適用</tspan></text>
+<path d="M540 1200 H552 L556 1204 V1212 H540 Z" fill="#88888814" stroke="#888"/>
+<text x="562" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan >產出物(下一階段的輸入)</tspan></text>
+<text x="740" y="1210" font-size="11" text-anchor="start" fill="#222"><tspan fill="#888">虛線框 = 選用 / 替代</tspan></text>
+</svg>
