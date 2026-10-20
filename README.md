@@ -2,7 +2,7 @@
 
 把兩套 Claude Code skill set 扁平裝進 `~/.claude/skills/`,用短名直接叫(`/how`、`/grilling`,不是 `/pstack:how`),版本釘在 `versions.lock`,換機器跑一支腳本就裝出一樣的東西。
 
-開發流程圖:[docs/workflow.htm](docs/workflow.htm)(下載後用瀏覽器開)。
+開發流程圖:[docs/workflow.md](docs/workflow.md)(GitHub 上直接看;本機版 [docs/workflow.htm](docs/workflow.htm) 用瀏覽器開)。
 
 ## 這是什麼
 
@@ -78,7 +78,7 @@ v1.3 起 Pocock 把 `CONTEXT.md` 改名 `GLOSSARY.md`(`CONTEXT-MAP.md` → `GLOS
 | 驗證 / 審查 / PR | pstack 為主 | 同上;Pocock `/code-review`、`pr` 可並用 |
 | 回顧 | Pocock | `/retro`;pstack `/reflect` 可替代 |
 
-圖解見 [docs/workflow.htm](docs/workflow.htm)。
+圖解見 [docs/workflow.md](docs/workflow.md)。
 
 ## 同名與排除清單
 
