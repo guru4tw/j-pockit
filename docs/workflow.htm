@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>j-pockit &#x958B;&#x767C;&#x6D41;&#x7A0B;:pstack + mattpocock-skills &#x5408;&#x7528;&#x8DEF;&#x7DDA;</title>
+<style>
+body { font-family: -apple-system, "Segoe UI", "Microsoft JhengHei", sans-serif; max-width: 980px; margin: 2em auto; padding: 0 1.5em; line-height: 1.65; color: #222; background: #fff; }
+h1 { border-bottom: 2px solid #333; padding-bottom: 0.3em; }
+h2 { border-bottom: 1px solid #aaa; padding-bottom: 0.2em; margin-top: 2em; }
+h3 { color: #444; margin-top: 1.5em; }
+h4 { color: #555; }
+a { color: #06c; }
+table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+th, td { border: 1px solid #bbb; padding: 0.5em 0.8em; text-align: left; vertical-align: top; }
+th { background: #f0f0f0; }
+code { background: #f4f4f4; padding: 0.1em 0.4em; border-radius: 3px; font-family: Consolas, monospace; font-size: 0.92em; }
+pre { background: #f7f7f7; border-left: 3px solid #888; padding: 0.8em 1em; overflow-x: auto; }
+blockquote { border-left: 4px solid #5b9; padding: 0.4em 1em; background: #f0f8f4; color: #335; margin: 1em 0; }
+.pipeline { font-family: Consolas, monospace; background: #fafafa; border: 1px solid #ccc; padding: 0.8em; margin: 0.6em 0; white-space: pre; overflow-x: auto; line-height: 1.4; font-size: 0.92em; }
+.verdict { background: #fff8e1; border: 1px solid #e0c060; padding: 0.8em 1em; margin: 1em 0; border-radius: 4px; }
+.confirmed { background: #e8f4e8; border: 1px solid #80a880; padding: 0.6em 1em; margin: 0.8em 0; border-radius: 4px; }
+.refuted   { background: #fbe8e8; border: 1px solid #c08080; padding: 0.6em 1em; margin: 0.8em 0; border-radius: 4px; }
+.badge-confirmed { background: #d8ecd8; border: 1px solid #80a880; color: #1e4a1e; padding: 0.1em 0.5em; display: inline-block; border-radius: 3px; }
+.badge-refuted   { background: #f4d8d8; border: 1px solid #c08080; color: #5a1e1e; padding: 0.1em 0.5em; display: inline-block; border-radius: 3px; }
+.badge-minor     { background: #d8e4f4; border: 1px solid #80a0c0; color: #1e3a5a; padding: 0.1em 0.5em; display: inline-block; border-radius: 3px; }
+.badge-warn      { background: #f4ecd0; border: 1px solid #c0a060; color: #5a4a1e; padding: 0.1em 0.5em; display: inline-block; border-radius: 3px; }
+.ref { font-size: 0.9em; color: #666; }
+ul li { margin: 0.3em 0; }
+a.gloss { border-bottom: 1px dotted #06c; text-decoration: none; }
+sup.cite { font-size: 0.75em; }
+sup.cite a { color: #06c; text-decoration: none; font-weight: bold; }
+.cite-demo { color: #06c; font-weight: bold; }
+
+@media (prefers-color-scheme: dark) {
+  body { color: #e6e6e6; background: #1e1e1e; }
+  h1 { border-bottom-color: #888; color: #f5f5f5; }
+  h2 { border-bottom-color: #555; color: #f0f0f0; }
+  h3 { color: #d0d0d0; }
+  h4 { color: #c0c0c0; }
+  a { color: #6cb6ff; }
+  th, td { border-color: #555; }
+  th { background: #2d2d2d; color: #f0f0f0; }
+  code { background: #2d2d2d; color: #f0e090; }
+  pre { background: #252525; border-left-color: #888; color: #e6e6e6; }
+  blockquote { background: #1e2a26; border-left-color: #5b9; color: #cfd8d4; }
+  .pipeline { background: #252525; border-color: #444; color: #e6e6e6; }
+  .verdict { background: #3a2f15; border-color: #8a6a2a; color: #f0e0b8; }
+  .confirmed { background: #1e3a1e; border-color: #408040; color: #c8f0c8; }
+  .refuted   { background: #3a1e1e; border-color: #8a4040; color: #f0c8c8; }
+  .badge-confirmed { background: #1e3a1e; border-color: #408040; color: #c8f0c8; }
+  .badge-refuted   { background: #3a1e1e; border-color: #8a4040; color: #f0c8c8; }
+  .badge-minor     { background: #1e2a3a; border-color: #4070a0; color: #c8d8f0; }
+  .badge-warn      { background: #3a2f15; border-color: #8a6a2a; color: #f0e0b8; }
+  .ref { color: #aaa; }
+  a.gloss { border-bottom-color: #6cb6ff; }
+  sup.cite a { color: #6cb6ff; }
+  .cite-demo { color: #6cb6ff; }
+}
+</style>
+</head>
+<body>
+
+<h1>j-pockit &#x958B;&#x767C;&#x6D41;&#x7A0B;:pstack + mattpocock-skills &#x5408;&#x7528;&#x8DEF;&#x7DDA;</h1>
+<p><strong>&#x65E5;&#x671F;</strong>:2026-10-20 &nbsp;&nbsp; <strong>&#x76EE;&#x7684;</strong>:&#x4E00;&#x5F35;&#x5716;&#x770B;&#x61C2;&#x5169;&#x5957; skill set &#x5728;&#x958B;&#x767C;&#x6D41;&#x7A0B;&#x88E1;&#x600E;&#x9EBC;&#x5206;&#x5DE5;&#x3001;&#x600E;&#x9EBC;&#x63A5;&#x3002;</p>
+
+<hr>
+
+<h2 id="sec-agenda">Agenda(&#x7AE0;&#x7BC0;&#x5C0E;&#x89BD;)</h2>
+<p>&#x5168;&#x7BC7;&#x7AE0;&#x7BC0;&#x4E00;&#x89BD;,&#x9EDE;&#x4EFB;&#x4E00;&#x6A19;&#x984C;&#x76F4;&#x63A5;&#x8DF3;&#x5230;&#x8A72;&#x7BC0;&#x5167;&#x5BB9;&#x3002;</p>
+<nav>
+<ul style="line-height:1.9;">
+<li><a href="#sec-1">1. &#x4E00;&#x5F35;&#x5716;&#x770B;&#x61C2;</a></li>
+<li><a href="#sec-2">2. &#x8A2D;&#x5B9A;(&#x4E00;&#x6B21;&#x6027;)</a></li>
+<li><a href="#sec-3">3. &#x898F;&#x5283; / &#x898F;&#x683C; / &#x7968;:Pocock</a></li>
+<li><a href="#sec-4">4. &#x57F7;&#x884C; / &#x9A57;&#x8B49; / &#x5BE9;&#x67E5; / PR:pstack &#x70BA;&#x4E3B;</a></li>
+<li><a href="#sec-5">5. &#x56DE;&#x9867;</a></li>
+<li><a href="#sec-6">6. &#x55AE; session &#x6377;&#x5F91;</a></li>
+<li><a href="#appendix-a">&#x9644;&#x9304; A. &#x53C3;&#x8003;&#x4F86;&#x6E90;(References)</a></li>
+<li><a href="#appendix-b">&#x9644;&#x9304; B. &#x6280;&#x8853;&#x95DC;&#x9375;&#x5B57;&#x8853;&#x8A9E;&#x8868;(&#x53E3;&#x8A9E;&#x5316;&#x8AAA;&#x660E;)</a></li>
+</ul>
+</nav>
+
+<hr>
+
+<h2 id="sec-1">1. &#x4E00;&#x5F35;&#x5716;&#x770B;&#x61C2;</h2>
+
+<p>&#x5206;&#x5DE5;&#x539F;&#x5247;&#x4E00;&#x53E5;&#x8A71;:<strong>&#x60F3;&#x6E05;&#x695A;&#x3001;&#x5BEB;&#x4E0B;&#x4F86;&#x3001;&#x5207;&#x6210;&#x7968;</strong>&#x4EA4;&#x7D66; <a class="gloss" href="#g-mattpocock-skills">mattpocock-skills</a>(Pocock);<strong>&#x52D5;&#x624B;&#x3001;&#x9A57;&#x8B49;&#x3001;&#x5BE9;&#x67E5;&#x3001;&#x51FA; PR</strong>&#x4EA4;&#x7D66; <a class="gloss" href="#g-pstack">pstack</a>&#x3002;pstack &#x81EA;&#x5DF1;&#x7684;&#x8AAA;&#x660E;&#x5C31;&#x5BEB;&#x660E;&#x5B83;&#x6C92;&#x6709; planning skill<sup class="cite">[<a href="#ref-1">1</a>]</sup>,&#x6240;&#x4EE5;&#x898F;&#x5283;&#x6BB5;&#x53EA;&#x80FD;&#x7528; Pocock<sup class="cite">[<a href="#ref-2">2</a>]</sup>&#x3002;</p>
+
+<figure style="margin: 1.2em 0; text-align: center;">
+<svg viewBox="0 0 980 330" xmlns="http://www.w3.org/2000/svg" style="max-width: 100%; height: auto; background: transparent;" font-family="Segoe UI, Microsoft JhengHei, sans-serif">
+  <defs>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#999"/>
+    </marker>
+  </defs>
+  <!-- 0 setup -->
+  <rect x="8" y="20" width="176" height="170" rx="6" fill="#4a9a6a20" stroke="#4a9a6a" stroke-width="1.5"/>
+  <text x="96" y="44" fill="currentColor" font-size="13" font-weight="600" text-anchor="middle">0. &#x8A2D;&#x5B9A;(&#x4E00;&#x6B21;&#x6027;)</text>
+  <text x="96" y="64" fill="#4a9a6a" font-size="11" text-anchor="middle">&#x5169;&#x5957;&#x5404;&#x4E00;</text>
+  <text x="96" y="92" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/setup-pstack</text>
+  <text x="96" y="108" fill="#888" font-size="10.5" text-anchor="middle">&#x6BCF;&#x53F0;&#x6A5F;&#x5668;&#x4E00;&#x6B21;</text>
+  <text x="96" y="136" fill="currentColor" font-size="10.5" font-family="Consolas, monospace" text-anchor="middle">/setup-matt-pocock-skills</text>
+  <text x="96" y="152" fill="#888" font-size="10.5" text-anchor="middle">&#x6BCF;&#x500B; repo &#x4E00;&#x6B21;</text>
+  <!-- 1 plan -->
+  <rect x="204" y="20" width="176" height="170" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+  <text x="292" y="44" fill="currentColor" font-size="13" font-weight="600" text-anchor="middle">1. &#x898F;&#x5283; / &#x898F;&#x683C; / &#x7968;</text>
+  <text x="292" y="64" fill="#3a86c8" font-size="11" text-anchor="middle">Pocock</text>
+  <text x="292" y="92" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/grill-with-docs</text>
+  <text x="292" y="116" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">&#x2193; /to-spec</text>
+  <text x="292" y="140" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">&#x2193; /to-tickets</text>
+  <text x="292" y="166" fill="#888" font-size="10.5" text-anchor="middle">&#x7522;&#x51FA;:ADR&#x3001;GLOSSARY&#x3001;&#x7968;</text>
+  <!-- 2 execute -->
+  <rect x="400" y="20" width="176" height="170" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+  <text x="488" y="44" fill="currentColor" font-size="13" font-weight="600" text-anchor="middle">2. &#x57F7;&#x884C;</text>
+  <text x="488" y="64" fill="#c88a5a" font-size="11" text-anchor="middle">pstack &#x70BA;&#x4E3B;</text>
+  <text x="488" y="92" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/how  &#x5148;&#x770B;&#x61C2;</text>
+  <text x="488" y="112" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/swarm  &#x5E73;&#x884C;</text>
+  <text x="488" y="140" fill="#3a86c8" font-size="10.5" text-anchor="middle">Pocock &#x9010;&#x7968;:</text>
+  <text x="488" y="158" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/implement &#x2192; /tdd</text>
+  <!-- 3 verify -->
+  <rect x="596" y="20" width="176" height="170" rx="6" fill="#c88a5a20" stroke="#c88a5a" stroke-width="1.5"/>
+  <text x="684" y="44" fill="currentColor" font-size="13" font-weight="600" text-anchor="middle">3. &#x9A57;&#x8B49; / &#x5BE9;&#x67E5; / PR</text>
+  <text x="684" y="64" fill="#c88a5a" font-size="11" text-anchor="middle">pstack &#x70BA;&#x4E3B;</text>
+  <text x="684" y="92" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/interrogate</text>
+  <text x="684" y="112" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/unslop  &#x4FEE;&#x6587;&#x5B57;</text>
+  <text x="684" y="140" fill="#3a86c8" font-size="10.5" text-anchor="middle">Pocock &#x53EF;&#x4E26;&#x7528;:</text>
+  <text x="684" y="158" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/code-review&#x3001;pr</text>
+  <!-- 4 retro -->
+  <rect x="792" y="20" width="176" height="170" rx="6" fill="#3a86c820" stroke="#3a86c8" stroke-width="1.5"/>
+  <text x="880" y="44" fill="currentColor" font-size="13" font-weight="600" text-anchor="middle">4. &#x56DE;&#x9867;</text>
+  <text x="880" y="64" fill="#3a86c8" font-size="11" text-anchor="middle">Pocock</text>
+  <text x="880" y="92" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/retro</text>
+  <text x="880" y="120" fill="#c88a5a" font-size="10.5" text-anchor="middle">pstack &#x66FF;&#x4EE3;:</text>
+  <text x="880" y="138" fill="currentColor" font-size="11" font-family="Consolas, monospace" text-anchor="middle">/reflect</text>
+  <!-- forward arrows -->
+  <line x1="184" y1="105" x2="202" y2="105" stroke="#999" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="380" y1="105" x2="398" y2="105" stroke="#999" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="576" y1="105" x2="594" y2="105" stroke="#999" stroke-width="1.5" marker-end="url(#ah)"/>
+  <line x1="772" y1="105" x2="790" y2="105" stroke="#999" stroke-width="1.5" marker-end="url(#ah)"/>
+  <!-- poteto-mode band -->
+  <rect x="400" y="204" width="372" height="30" rx="4" fill="#c88a5a14" stroke="#c88a5a" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="586" y="224" fill="currentColor" font-size="11.5" text-anchor="middle">/poteto-mode &#x5E38;&#x99D0;(pstack &#x7684; agent &#x5DE5;&#x4F5C;&#x98A8;&#x683C;,2&#x3001;3 &#x5168;&#x7A0B;&#x958B;&#x8457;)</text>
+  <!-- loop back -->
+  <path d="M 880 190 L 880 262 L 292 262 L 292 194" fill="none" stroke="#999" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#ah)"/>
+  <text x="586" y="280" fill="#888" font-size="11" text-anchor="middle">&#x4E0B;&#x4E00;&#x5F35;&#x7968; / &#x4E0B;&#x4E00;&#x8F2A;</text>
+  <!-- legend -->
+  <rect x="250" y="302" width="14" height="12" fill="#3a86c820" stroke="#3a86c8"/>
+  <text x="270" y="312" fill="currentColor" font-size="11">Pocock</text>
+  <rect x="360" y="302" width="14" height="12" fill="#c88a5a20" stroke="#c88a5a"/>
+  <text x="380" y="312" fill="currentColor" font-size="11">pstack</text>
+  <rect x="470" y="302" width="14" height="12" fill="#4a9a6a20" stroke="#4a9a6a"/>
+  <text x="490" y="312" fill="currentColor" font-size="11">&#x5169;&#x5957;&#x5404;&#x4E00;</text>
+</svg>
+<figcaption style="font-size: 0.88em; color: #aaa; margin-top: 0.6em; line-height: 1.5;">
+&#x5716; 1:&#x56DB;&#x6BB5;&#x6D41;&#x7A0B;&#x52A0;&#x4E00;&#x6B21;&#x6027;&#x8A2D;&#x5B9A;&#x3002;&#x85CD;&#x6846;&#x7528; Pocock&#x3001;&#x6A58;&#x6846;&#x4EE5; pstack &#x70BA;&#x4E3B;;&#x865B;&#x7DDA;&#x6846;&#x662F;&#x5168;&#x7A0B;&#x5E38;&#x99D0;&#x7684; <code><a class="gloss" href="#g-poteto-mode">/poteto-mode</a></code>,&#x865B;&#x7DDA;&#x56DE;&#x982D;&#x7BAD;&#x865F;&#x662F;&#x505A;&#x4E0B;&#x4E00;&#x5F35;&#x7968;&#x3002;
+</figcaption>
+</figure>
+
+<hr>
+
+<h2 id="sec-2">2. &#x8A2D;&#x5B9A;(&#x4E00;&#x6B21;&#x6027;)</h2>
+
+<table>
+<thead><tr><th>&#x6307;&#x4EE4;</th><th>&#x983B;&#x7387;</th><th>&#x505A;&#x4EC0;&#x9EBC;</th></tr></thead>
+<tbody>
+<tr><td><code><a class="gloss" href="#g-setup-pstack">/setup-pstack</a></code></td><td>&#x6BCF;&#x53F0;&#x6A5F;&#x5668;&#x4E00;&#x6B21;</td><td>&#x4F9D;&#x53EF;&#x7528;&#x6A21;&#x578B;&#x9078;&#x6BCF;&#x500B;&#x89D2;&#x8272;&#x7528;&#x54EA;&#x500B;&#x6A21;&#x578B;&#x3001;&#x591A;&#x5C11; <a class="gloss" href="#g-reasoning-budget">reasoning budget</a>,&#x5BEB;&#x6210; <code><a class="gloss" href="#g-pstack-models-md">~/.claude/rules/pstack-models.md</a></code>&#x3002;&#x975E; Claude &#x7684;&#x6A21;&#x578B;&#x540D;&#x5728; Claude Code &#x4E0B;&#x7531; <a class="gloss" href="#g-adapter">adapter</a> &#x9000;&#x56DE; session &#x6A21;&#x578B;&#x3002;</td></tr>
+<tr><td><code><a class="gloss" href="#g-setup-matt-pocock-skills">/setup-matt-pocock-skills</a></code></td><td>&#x6BCF;&#x500B; repo &#x4E00;&#x6B21;</td><td>&#x8A2D;&#x5B9A;&#x8A72; repo &#x7684; <a class="gloss" href="#g-issue-tracker">issue tracker</a>&#x3001;triage label&#x3001;domain &#x6587;&#x4EF6;&#x653E;&#x54EA;&#x3002;</td></tr>
+</tbody>
+</table>
+
+<p>&#x5169;&#x8005;&#x6C92;&#x6709;&#x5148;&#x5F8C;,&#x4E5F;&#x4E0D;&#x4E92;&#x65A5;&#x3002;</p>
+
+<hr>
+
+<h2 id="sec-3">3. &#x898F;&#x5283; / &#x898F;&#x683C; / &#x7968;:Pocock</h2>
+
+<table>
+<thead><tr><th>&#x6B65;&#x9A5F;</th><th>&#x6307;&#x4EE4;</th><th>&#x7522;&#x51FA;</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><code><a class="gloss" href="#g-grill-with-docs">/grill-with-docs</a></code></td><td>&#x4E00;&#x984C;&#x4E00;&#x984C;&#x903C;&#x554F;&#x5230;&#x8A08;&#x756B;&#x6C92;&#x6709;&#x6A21;&#x7CCA;&#x8655;,&#x908A;&#x554F;&#x908A;&#x5BEB; <a class="gloss" href="#g-adr">ADR</a> &#x8207; <code><a class="gloss" href="#g-glossary-md">GLOSSARY.md</a></code>&#x3002;</td></tr>
+<tr><td>2</td><td><code><a class="gloss" href="#g-to-spec">/to-spec</a></code></td><td>&#x628A;&#x525B;&#x624D;&#x8A0E;&#x8AD6;&#x6574;&#x7406;&#x6210;&#x4E00;&#x4EFD; spec,&#x767C;&#x5230; issue tracker&#x3002;&#x4E0D;&#x518D;&#x554F;&#x554F;&#x984C;&#x3002;</td></tr>
+<tr><td>3</td><td><code><a class="gloss" href="#g-to-tickets">/to-tickets</a></code></td><td>&#x628A; spec &#x5207;&#x6210;&#x4E00;&#x7D44; <a class="gloss" href="#g-tracer-bullet">tracer-bullet</a> &#x7968;,&#x6BCF;&#x5F35;&#x6A19;&#x660E;&#x88AB;&#x54EA;&#x5F35;&#x64CB;&#x4F4F;&#x3002;</td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2 id="sec-4">4. &#x57F7;&#x884C; / &#x9A57;&#x8B49; / &#x5BE9;&#x67E5; / PR:pstack &#x70BA;&#x4E3B;</h2>
+
+<p>&#x958B;&#x5DE5;&#x524D;&#x5148;&#x958B; <code><a class="gloss" href="#g-poteto-mode">/poteto-mode</a></code>,&#x6574;&#x6BB5;&#x90FD;&#x5728;&#x9019;&#x500B;&#x5DE5;&#x4F5C;&#x98A8;&#x683C;&#x4E0B;&#x505A;:&#x56DE;&#x8986;&#x7CBE;&#x7C21;&#x3001;&#x523B;&#x610F;&#x5206;&#x6D3E; <a class="gloss" href="#g-subagent">subagent</a>&#x3001;&#x6587;&#x5B57;&#x53BB; AI &#x8154;&#x3001;&#x7A0B;&#x5F0F;&#x78BC;&#x4FDD;&#x6301;&#x7C21;&#x55AE;&#x3001;&#x505A;&#x5B8C;&#x8981;&#x9A57;&#x8B49;&#x3002;</p>
+
+<table>
+<thead><tr><th>&#x8981;&#x505A;&#x4EC0;&#x9EBC;</th><th>&#x6307;&#x4EE4;</th><th>&#x54EA;&#x5957;</th></tr></thead>
+<tbody>
+<tr><td>&#x6539;&#x4E4B;&#x524D;&#x5148;&#x770B;&#x61C2;&#x65E2;&#x6709;&#x7A0B;&#x5F0F;&#x600E;&#x9EBC;&#x8DD1;&#x3001;&#x6771;&#x897F;&#x8A72;&#x653E;&#x54EA;&#x5C64;</td><td><code><a class="gloss" href="#g-how">/how</a></code></td><td>pstack</td></tr>
+<tr><td>&#x5DE5;&#x4F5C;&#x91CF;&#x5927;&#x3001;&#x53EF;&#x62C6;:&#x958B; N &#x500B;&#x5E73;&#x884C; worker,&#x6536;&#x6210;&#x4E00;&#x4EFD;&#x5831;&#x544A;</td><td><code><a class="gloss" href="#g-swarm">/swarm</a></code></td><td>pstack</td></tr>
+<tr><td>&#x9010;&#x7968;&#x5BE6;&#x4F5C;</td><td><code><a class="gloss" href="#g-implement">/implement</a></code>(&#x5167;&#x90E8;&#x53EB; <code><a class="gloss" href="#g-tdd">/tdd</a></code>&#x3001;<code><a class="gloss" href="#g-code-review">/code-review</a></code>)</td><td>Pocock</td></tr>
+<tr><td>&#x591A;&#x500B; reviewer &#x5F9E;&#x4E0D;&#x540C;&#x89D2;&#x5EA6;&#x6311;&#x6230;&#x8A2D;&#x8A08;&#x6216;&#x6539;&#x52D5;</td><td><code><a class="gloss" href="#g-interrogate">/interrogate</a></code></td><td>pstack</td></tr>
+<tr><td>&#x4F9D; repo &#x898F;&#x7BC4;&#x8207;&#x539F;&#x59CB; spec &#x5169;&#x689D;&#x8EF8;&#x5BE9; diff</td><td><code>/code-review</code></td><td>Pocock</td></tr>
+<tr><td>&#x5BEB; PR &#x8AAA;&#x660E;</td><td><code><a class="gloss" href="#g-pr">pr</a></code></td><td>Pocock</td></tr>
+<tr><td>&#x522A;&#x6389;&#x6587;&#x5B57;&#x88E1;&#x7684; AI &#x8154;</td><td><code><a class="gloss" href="#g-unslop">/unslop</a></code></td><td>pstack</td></tr>
+</tbody>
+</table>
+
+<blockquote>&#x70BA;&#x4EC0;&#x9EBC; <code>tdd</code> &#x88DD; Pocock &#x7248;:Pocock &#x7684; <code>/implement</code> &#x662F;&#x4F7F;&#x7528;&#x8005;&#x53EB;&#x7684; orchestrator,&#x5B83;&#x6703;&#x81EA;&#x52D5;&#x53EB; <a class="gloss" href="#g-model-invoked">model-invoked</a> &#x7684; <code>/tdd</code>&#x3002;&#x63DB;&#x6210; pstack &#x7248;,&#x9019;&#x689D;&#x93C8;&#x5C31;&#x65B7;&#x4E86;&#x3002;</blockquote>
+
+<hr>
+
+<h2 id="sec-5">5. &#x56DE;&#x9867;</h2>
+
+<ul>
+<li><code><a class="gloss" href="#g-retro">/retro</a></code>(Pocock):&#x5C0D;&#x4E00;&#x6BB5;&#x958B;&#x767C; session &#x505A;&#x56DE;&#x9867;&#x3002;</li>
+<li><code><a class="gloss" href="#g-reflect">/reflect</a></code>(pstack):&#x958B;&#x4E09;&#x500B; review subagent &#x6383;&#x672C;&#x6B21;&#x5C0D;&#x8A71;,&#x628A;&#x5B78;&#x5230;&#x7684;&#x6771;&#x897F;&#x843D;&#x6210;&#x67D0;&#x500B;&#x65E2;&#x6709; skill &#x7684;&#x5177;&#x9AD4;&#x4FEE;&#x6539;&#x3002;&#x60F3;&#x76F4;&#x63A5;&#x6539; skill &#x6642;&#x7528;&#x5B83;&#x3002;</li>
+</ul>
+
+<hr>
+
+<h2 id="sec-6">6. &#x55AE; session &#x6377;&#x5F91;</h2>
+
+<p>&#x5C0F;&#x6539;&#x52D5;&#x4E0D;&#x5FC5;&#x8D70;&#x5B8C;&#x6574;&#x689D;&#x3002;Pocock &#x81EA;&#x5DF1;&#x5EFA;&#x8B70;&#x7684;&#x77ED;&#x8DEF;&#x7DDA;&#x662F; <code>/grill-with-docs</code> &#x2192; <code>/implement</code><sup class="cite">[<a href="#ref-2">2</a>]</sup>:&#x554F;&#x6E05;&#x695A;&#x5C31;&#x76F4;&#x63A5;&#x505A;,&#x8DF3;&#x904E; spec &#x8207;&#x7968;&#x3002;&#x57F7;&#x884C;&#x6642;&#x7167;&#x6A23;&#x53EF;&#x4EE5;&#x958B; <code>/poteto-mode</code>&#x3002;</p>
+
+<hr>
+
+<h2 id="appendix-a">&#x9644;&#x9304; A. &#x53C3;&#x8003;&#x4F86;&#x6E90;(References)</h2>
+<table>
+<thead><tr><th>#</th><th>&#x4E3B;&#x984C; / &#x7528;&#x9014;</th><th>&#x4F86;&#x6E90;</th></tr></thead>
+<tbody>
+<tr id="ref-1"><td>#1</td><td>pstack(Lauren Tan)</td><td><a href="https://github.com/cursor/plugins/tree/main/pstack">cursor/plugins &#x2014; pstack</a></td></tr>
+<tr id="ref-2"><td>#2</td><td>mattpocock-skills(Matt Pocock)</td><td><a href="https://github.com/mattpocock/skills">mattpocock/skills</a></td></tr>
+<tr id="ref-3"><td>#3</td><td>Claude Code skill &#x6A5F;&#x5236;(<code>disable-model-invocation</code> &#x7B49;)</td><td><a href="https://code.claude.com/docs/en/skills">Claude Code docs &#x2014; Skills</a></td></tr>
+<tr id="ref-4"><td>#4</td><td>&#x672C; repo &#x5B89;&#x88DD;&#x8207;&#x6392;&#x9664;&#x6E05;&#x55AE;</td><td><a href="../README.md">README.md</a></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2 id="appendix-b">&#x9644;&#x9304; B. &#x6280;&#x8853;&#x95DC;&#x9375;&#x5B57;&#x8853;&#x8A9E;&#x8868;(&#x53E3;&#x8A9E;&#x5316;&#x8AAA;&#x660E;)</h2>
+<table>
+<thead><tr><th>&#x95DC;&#x9375;&#x5B57;</th><th>&#x985E;&#x5225;</th><th>&#x53E3;&#x8A9E;&#x5316;&#x8AAA;&#x660E; / &#x4F86;&#x6E90;#</th></tr></thead>
+<tbody>
+<tr id="g-pstack"><td><code>pstack</code></td><td>skill set</td><td>Lauren Tan &#x7684; 56 &#x500B; skill,&#x504F;&#x57F7;&#x884C;&#x3001;&#x9A57;&#x8B49;&#x3001;&#x5BE9;&#x67E5;&#x3002;j-pockit &#x88DD;&#x5176;&#x4E2D; 55 &#x500B;(&#x4E0D;&#x88DD; <code>tdd</code>)&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-mattpocock-skills"><td><code>mattpocock-skills</code></td><td>skill set</td><td>Matt Pocock &#x7684; skill &#x96C6;,&#x504F;&#x898F;&#x5283;&#x3001;&#x5BEB; spec&#x3001;&#x5207;&#x7968;&#x3002;j-pockit &#x88DD; engineering + productivity &#x5171; 25 &#x500B;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-setup-pstack"><td><code>/setup-pstack</code></td><td>pstack skill</td><td>&#x4E00;&#x53F0;&#x6A5F;&#x5668;&#x8DD1;&#x4E00;&#x6B21;,&#x6C7A;&#x5B9A; pstack &#x5404;&#x89D2;&#x8272;&#x7528;&#x54EA;&#x500B;&#x6A21;&#x578B;&#x3001;&#x7D66;&#x591A;&#x5C11;&#x63A8;&#x7406;&#x9810;&#x7B97;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-reasoning-budget"><td><code>reasoning budget</code></td><td>&#x8A2D;&#x5B9A;&#x503C;</td><td>&#x6A21;&#x578B;&#x6BCF;&#x6B21;&#x53EF;&#x4EE5;&#x82B1;&#x591A;&#x5C11;&#x63A8;&#x7406;&#x91CF;&#x3002;pstack &#x5206; unlimited / large / medium / small &#x56DB;&#x6A94;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-pstack-models-md"><td><code>~/.claude/rules/pstack-models.md</code></td><td>&#x6A94;&#x6848;</td><td><code>/setup-pstack</code> &#x5BEB;&#x51FA;&#x7684; rule &#x6A94;,&#x6BCF;&#x500B;&#x5C08;&#x6848;&#x90FD;&#x6703;&#x5957;&#x7528;,&#x84CB;&#x904E; skill &#x5167;&#x5EFA;&#x7684;&#x6A21;&#x578B;&#x9810;&#x8A2D;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-adapter"><td><code>adapter</code></td><td>pstack &#x6587;&#x4EF6;</td><td><code>~/.claude/docs/harness/claude-code.md</code>,&#x628A; pstack &#x539F;&#x672C;&#x7D66; Cursor &#x7684;&#x5BEB;&#x6CD5;&#x5C0D;&#x61C9;&#x5230; Claude Code(&#x5DE5;&#x5177;&#x540D;&#x3001;&#x6A21;&#x578B;&#x540D;&#x3001;&#x6A94;&#x6848;&#x8DEF;&#x5F91;)&#x3002;&#x6BCF;&#x500B; pstack skill &#x958B;&#x982D;&#x90FD;&#x6703;&#x53EB;&#x4F60;&#x5148;&#x8B80;&#x5B83;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-setup-matt-pocock-skills"><td><code>/setup-matt-pocock-skills</code></td><td>Pocock skill</td><td>&#x6BCF;&#x500B; repo &#x8DD1;&#x4E00;&#x6B21;,&#x544A;&#x8A34; Pocock &#x7684; skill &#x9019;&#x500B; repo &#x7684;&#x7968;&#x958B;&#x5728;&#x54EA;&#x3001;label &#x600E;&#x9EBC;&#x53EB;&#x3001;&#x6587;&#x4EF6;&#x653E;&#x54EA;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-issue-tracker"><td><code>issue tracker</code></td><td>&#x6982;&#x5FF5;</td><td>&#x653E; spec &#x8207;&#x7968;&#x7684;&#x5730;&#x65B9;,&#x53EF;&#x4EE5;&#x662F; GitHub Issues,&#x4E5F;&#x53EF;&#x4EE5;&#x662F; repo &#x88E1;&#x4E00;&#x5F35;&#x7968;&#x4E00;&#x500B;&#x6A94;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-grill-with-docs"><td><code>/grill-with-docs</code></td><td>Pocock skill</td><td>&#x5C0D;&#x8A08;&#x756B;&#x9023;&#x7E8C;&#x8FFD;&#x554F;,&#x554F;&#x5230;&#x6C92;&#x6709;&#x6A21;&#x7CCA;&#x8655;,&#x540C;&#x6642;&#x628A;&#x6C7A;&#x5B9A;&#x5BEB;&#x6210; ADR &#x8207;&#x8853;&#x8A9E;&#x8868;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-adr"><td><code>ADR</code></td><td>&#x6587;&#x4EF6;&#x985E;&#x578B;</td><td>Architecture Decision Record,&#x4E00;&#x500B;&#x91CD;&#x8981;&#x6C7A;&#x5B9A;&#x4E00;&#x4EFD;&#x77ED;&#x6587;&#x4EF6;:&#x7576;&#x6642;&#x7684;&#x60C5;&#x6CC1;&#x3001;&#x9078;&#x4E86;&#x4EC0;&#x9EBC;&#x3001;&#x70BA;&#x4EC0;&#x9EBC;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-glossary-md"><td><code>GLOSSARY.md</code></td><td>&#x6587;&#x4EF6;</td><td>&#x5C08;&#x6848;&#x8853;&#x8A9E;&#x8868;&#x3002;Pocock v1.3 &#x8D77;&#x7531; <code>CONTEXT.md</code> &#x6539;&#x540D;&#x800C;&#x4F86;,&#x820A;&#x5C08;&#x6848;&#x8981;&#x81EA;&#x5DF1;&#x6539;&#x540D;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-to-spec"><td><code>/to-spec</code></td><td>Pocock skill</td><td>&#x628A;&#x76EE;&#x524D;&#x5C0D;&#x8A71;&#x6574;&#x7406;&#x6210; spec &#x767C;&#x5230; issue tracker,&#x53EA;&#x505A;&#x5F59;&#x6574;&#x4E0D;&#x518D;&#x8A2A;&#x8AC7;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-to-tickets"><td><code>/to-tickets</code></td><td>Pocock skill</td><td>&#x628A;&#x8A08;&#x756B;&#x6216; spec &#x5207;&#x6210;&#x4E00;&#x7D44;&#x7968;,&#x6BCF;&#x5F35;&#x5BEB;&#x660E;&#x88AB;&#x54EA;&#x5E7E;&#x5F35;&#x64CB;&#x4F4F;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-tracer-bullet"><td><code>tracer-bullet</code></td><td>&#x5207;&#x7968;&#x65B9;&#x6CD5;</td><td>&#x6BCF;&#x5F35;&#x7968;&#x90FD;&#x662F;&#x5F9E;&#x982D;&#x5230;&#x5C3E;&#x6253;&#x901A;&#x7684;&#x4E00;&#x689D;&#x7D30;&#x8DEF;&#x5F91;(UI &#x5230;&#x8CC7;&#x6599;&#x90FD;&#x78B0;&#x4E00;&#x9EDE;),&#x505A;&#x5B8C;&#x5C31;&#x80FD;&#x8DD1;&#x3001;&#x80FD;&#x9A57;,&#x800C;&#x4E0D;&#x662F;&#x6309;&#x5C64;&#x5207;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-poteto-mode"><td><code>/poteto-mode</code></td><td>pstack skill</td><td>pstack &#x7684;&#x5E38;&#x99D0;&#x5DE5;&#x4F5C;&#x98A8;&#x683C;:&#x56DE;&#x8986;&#x7CBE;&#x7C21;&#x3001;&#x523B;&#x610F;&#x7528; subagent&#x3001;&#x6587;&#x5B57;&#x53BB; AI &#x8154;&#x3001;&#x7A0B;&#x5F0F;&#x7C21;&#x55AE;&#x3001;&#x505A;&#x5B8C;&#x8981;&#x9A57;&#x8B49;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-subagent"><td><code>subagent</code></td><td>Claude Code &#x6A5F;&#x5236;</td><td>&#x4E3B;&#x5C0D;&#x8A71;&#x6D3E;&#x51FA;&#x53BB;&#x505A;&#x4E00;&#x4EF6;&#x4E8B;&#x7684;&#x5B50;&#x4EE3;&#x7406;,&#x6709;&#x81EA;&#x5DF1;&#x7684; context,&#x53EA;&#x628A;&#x7D50;&#x8AD6;&#x5E36;&#x56DE;&#x4F86;&#x3002; <a href="#ref-3">[3]</a></td></tr>
+<tr id="g-how"><td><code>/how</code></td><td>pstack skill</td><td>&#x89E3;&#x91CB;&#x67D0;&#x500B;&#x5B50;&#x7CFB;&#x7D71;&#x600E;&#x9EBC;&#x904B;&#x4F5C;&#x3001;&#x8CC7;&#x6599;&#x600E;&#x9EBC;&#x6D41;&#x3001;&#x6771;&#x897F;&#x8A72;&#x653E;&#x54EA;&#x500B; package / &#x54EA;&#x4E00;&#x5C64;&#x3002;&#x6539;&#x7A0B;&#x5F0F;&#x524D;&#x5148;&#x8DD1;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-swarm"><td><code>/swarm</code></td><td>pstack skill</td><td>&#x540C;&#x6642;&#x958B; N &#x500B;&#x5E73;&#x884C; worker &#x505A;&#x540C;&#x4E00;&#x985E;&#x5DE5;&#x4F5C;,&#x5168;&#x90E8;&#x6536;&#x56DE;&#x5F8C;&#x5408;&#x6210;&#x4E00;&#x4EFD;&#x5831;&#x544A;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-implement"><td><code>/implement</code></td><td>Pocock skill</td><td>&#x7167; spec &#x6216;&#x7968;&#x5BE6;&#x4F5C;&#x4E00;&#x4EF6;&#x5DE5;&#x4F5C;;&#x4F7F;&#x7528;&#x8005;&#x624B;&#x52D5;&#x53EB;,&#x5167;&#x90E8;&#x6703;&#x53EB; <code>/tdd</code>&#x3001;<code>/code-review</code>&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-tdd"><td><code>/tdd</code></td><td>Pocock skill</td><td>&#x6E2C;&#x8A66;&#x5148;&#x884C;:&#x5148;&#x5BEB;&#x6703;&#x5931;&#x6557;&#x7684;&#x6E2C;&#x8A66;,&#x518D;&#x5BEB;&#x525B;&#x597D;&#x8B93;&#x5B83;&#x904E;&#x7684;&#x7A0B;&#x5F0F;,&#x518D;&#x6574;&#x7406;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-code-review"><td><code>/code-review</code></td><td>Pocock skill</td><td>&#x5F9E;&#x67D0;&#x500B;&#x57FA;&#x6E96;&#x9EDE;&#x8D77;&#x7684;&#x6539;&#x52D5;,&#x5206;&#x300C;&#x662F;&#x5426;&#x7B26;&#x5408; repo &#x898F;&#x7BC4;&#x300D;&#x8207;&#x300C;&#x662F;&#x5426;&#x7B26;&#x5408;&#x539F;&#x59CB; spec&#x300D;&#x5169;&#x689D;&#x8EF8;&#x5BE9;,&#x5169;&#x500B; subagent &#x5E73;&#x884C;&#x8DD1;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-interrogate"><td><code>/interrogate</code></td><td>pstack skill</td><td>&#x627E;&#x591A;&#x500B; reviewer &#x5404;&#x5F9E;&#x4E00;&#x500B;&#x89D2;&#x5EA6;&#x6311;&#x6230;&#x6539;&#x52D5;,&#x5C08;&#x627E;&#x76F2;&#x9EDE;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-pr"><td><code>pr</code></td><td>Pocock skill</td><td>&#x5BEB; PR &#x8AAA;&#x660E;&#x3002;&#x53D6;&#x6750;&#x81EA; Dex Horthy(HumanLayer)&#x7684; <code>show-me</code>&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-unslop"><td><code>/unslop</code></td><td>pstack skill</td><td>&#x628A;&#x6587;&#x5B57;&#x88E1;&#x4E00;&#x770B;&#x5C31;&#x662F; AI &#x5BEB;&#x7684;&#x75D5;&#x8DE1;&#x522A;&#x6389;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+<tr id="g-model-invoked"><td><code>model-invoked</code></td><td>skill &#x985E;&#x578B;</td><td>&#x6A21;&#x578B;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x5224;&#x65B7;&#x8981;&#x53EB;&#x7684; skill&#x3002;&#x53CD;&#x904E;&#x4F86;,frontmatter &#x5BEB; <code>disable-model-invocation: true</code> &#x7684;&#x53EA;&#x80FD;&#x7531;&#x4F7F;&#x7528;&#x8005;&#x6253; <code>/&#x540D;&#x5B57;</code> &#x53EB;&#x3002;Pocock &#x898F;&#x5B9A;&#x4F7F;&#x7528;&#x8005;&#x53EB;&#x7684;&#x53EF;&#x4EE5;&#x53EB;&#x6A21;&#x578B;&#x53EB;&#x7684;,&#x53CD;&#x5411;&#x4E0D;&#x884C;&#x3002; <a href="#ref-2">[2]</a> <a href="#ref-3">[3]</a></td></tr>
+<tr id="g-retro"><td><code>/retro</code></td><td>Pocock skill</td><td>&#x5C0D;&#x4E00;&#x6BB5;&#x958B;&#x767C; session &#x505A;&#x56DE;&#x9867;&#x3002; <a href="#ref-2">[2]</a></td></tr>
+<tr id="g-reflect"><td><code>/reflect</code></td><td>pstack skill</td><td>&#x958B;&#x4E09;&#x500B; review subagent &#x6383;&#x672C;&#x6B21;&#x5C0D;&#x8A71;,&#x628A;&#x5FC3;&#x5F97;&#x843D;&#x6210;&#x65E2;&#x6709; skill &#x7684;&#x5177;&#x9AD4;&#x4FEE;&#x6539;&#x3002; <a href="#ref-1">[1]</a></td></tr>
+</tbody>
+</table>
+
+</body></html>

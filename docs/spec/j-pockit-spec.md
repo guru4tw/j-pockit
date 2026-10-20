@@ -130,7 +130,11 @@
   - 步驟 2 PASS。`skills/` 共 83 個 SKILL.md = 55 + 25 + 3 個不碰的;封存 14 個到 `skills_archive/2026-10-20/`;`owl_check`、`plan-eng-review`、`writing-great-skills`、`commands/handoff.md` 的大小與 mtime 不變;docs 18 檔、agents 2 檔就位;`how/SKILL.md` 大小與上游 blob 相同(2839 bytes,LF 保留);`$env:TEMP\j-pockit` 已清。
   - 步驟 4 PASS。重跑封存 82 項(80 skill + 2 agent)到 `skills_archive/2026-10-20-2/`,結果同步驟 2。
   - 步驟 5 PASS。先 `git init -b main`,initial commit `948b218`(lock = d457567 / v1.3.1),再跑 `-Update`:pstack → `88d47514b82e7c44f00f2b2a72ff6dd12158038c`(main HEAD),Pocock 仍是最新 tag `v1.3.1`;`git diff` 只有 `versions.lock` 的 pstack 一行。照新 lock 重裝 55 + 25,封存 82 項到 `skills_archive/2026-10-20-3/`,不碰的 4 檔大小與 mtime 不變。
-  - 步驟 3 未做(要開新 session)。
+  - 步驟 3 部分 PASS(2026-10-20,新 session,lock = pstack `88d4751`、Pocock `v1.3.1`):
+    - `claude plugin validate D:/Users/joe/.claude/skills` → `✔ Validation passed`。
+    - 模型看得到的 skill 清單(system prompt)有 `grilling`,沒有 `how`、`implement`。這是設計如此:兩者 frontmatter 都是 `disable-model-invocation: true`,只進使用者的 `/` 選單,不進模型清單。模型清單共 14 個可自動叫的 skill,正好對上 83 個 SKILL.md 扣掉 69 個 `disable-model-invocation: true`(Pocock model-invoked 11 + `setup-pstack` + `owl_check` + `plan-eng-review`)。
+    - 與規格出入:pstack @ `88d4751` 的 `setup-pstack` **沒有** `disable-model-invocation`,不是 Further Notes 寫的「56 個全是」。不影響安裝,只是它的 description 會進 context。
+    - 待使用者補:互動 `claude` 終端打 `/` 確認 `/how`、`/implement` 在選單內;跑 `/doctor` 看有無警告。Claude Code 桌面 app 的 session 跑不了這兩項。
 
 ## Out of Scope
 
@@ -146,5 +150,5 @@
 ## Further Notes
 
 - pstack 的 `poteto-agent.md` frontmatter 帶 Cursor 專屬 `is_background: true`,Claude Code 不認得;照 adapter 規則忽略,不改檔。
-- pstack 56 個 skill 全 `disable-model-invocation: true`,description 不進 context;Pocock model-invoked 的那幾個會進,這是為了不斷鏈的代價。
+- pstack 56 個 skill 除 `setup-pstack` 外都是 `disable-model-invocation: true`(@ `88d4751` 實查),description 不進 context;Pocock model-invoked 的那幾個會進,這是為了不斷鏈的代價。
 - 接下來:`/handoff` 結算 → 下一 session 實作 installer + README + workflow.htm → 本機實跑驗收 → 改名兩個 CONTEXT.md。
