@@ -101,6 +101,8 @@ v1.3 起 Pocock 把 `CONTEXT.md` 改名 `GLOSSARY.md`(`CONTEXT-MAP.md` → `GLOS
 
 Pocock 的 `skills/in-progress/`、`skills/misc/` 不裝。
 
+cursor-team-kit 只裝白名單(`$TeamKitInclude`),目前只有 `deslop`,因為 `/poteto-mode` commit 前會叫它。它和 pstack 在同一個 repo,用同一個 SHA 抓。白名單裡的名字上游找不到,或跟另外兩套同名,腳本都會直接失敗。
+
 ## 致謝
 
 - **Lauren Tan**(poteto):pstack,MIT。<https://github.com/cursor/plugins/tree/main/pstack>

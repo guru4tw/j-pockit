@@ -1,4 +1,4 @@
-# j-pockit installer: flat-install pstack + mattpocock-skills into ~/.claude/skills/<name>/.
+# j-pockit installer: flat-install pstack + mattpocock-skills (+ allowlisted cursor-team-kit) into ~/.claude/skills/<name>/.
 # Spec: docs/spec/j-pockit-spec.md. ASCII-only; run _Owlery/parse_ps1.ps1 after every edit.
 #
 # Usage:
@@ -36,6 +36,11 @@ $PocockExclude = @(
 $PstackUrl     = 'https://github.com/cursor/plugins'
 $PstackBranch  = 'main'
 $PstackSubdir  = 'harness/pstack/claude-code'
+# cursor-team-kit lives in the same repo at the same SHA. Allowlist only: pstack calls these by name.
+$TeamKitSubdir  = 'cursor-team-kit/skills'
+$TeamKitInclude = @(
+    'deslop'     # poteto-mode runs /deslop before commit; no Cursor-only feature inside
+)
 $PocockUrl     = 'https://github.com/mattpocock/skills'
 $PocockSubdirs = @('skills/engineering', 'skills/productivity')
 
@@ -183,7 +188,7 @@ try {
     $pstackTmp = Join-Path $TempRoot 'pstack'
     $pocockTmp = Join-Path $TempRoot 'mattpocock-skills'
     Write-Host "Fetching pstack @ $pstackRef ..."
-    Get-Upstream $PstackUrl $pstackRef @($PstackSubdir) $pstackTmp
+    Get-Upstream $PstackUrl $pstackRef @($PstackSubdir, $TeamKitSubdir) $pstackTmp
     Write-Host "Fetching mattpocock-skills @ $($lock['mattpocock-skills']) ..."
     Get-Upstream $PocockUrl $pocockRef $PocockSubdirs $pocockTmp
 
@@ -196,11 +201,18 @@ try {
     if ($pstackSkills.Count -eq 0) { Fail 'pstack: 0 skills found upstream' }
     if ($pocockSkills.Count -eq 0) { Fail 'mattpocock-skills: 0 skills found upstream' }
 
-    # A name in both sets is a new conflict the exclusion lists do not decide yet.
+    $teamKitRoot   = Join-Path $pstackTmp ($TeamKitSubdir -replace '/', '\')
+    $teamKitSkills = @(Get-SkillDirs $teamKitRoot @() | Where-Object { $TeamKitInclude -contains $_.Name })
+    $teamKitNames  = @($teamKitSkills | ForEach-Object { $_.Name })
+    $missingKit    = @($TeamKitInclude | Where-Object { $teamKitNames -notcontains $_ })
+    if ($missingKit.Count -gt 0) { Fail "cursor-team-kit: not found upstream: $($missingKit -join ', ')" }
+
+    # A name in two sets is a new conflict the exclusion lists do not decide yet.
     $pstackNames = @($pstackSkills | ForEach-Object { $_.Name })
     $pocockNames = @($pocockSkills | ForEach-Object { $_.Name })
     $clash = @($pocockNames | Where-Object { $pstackNames -contains $_ })
-    if ($clash.Count -gt 0) { Fail "same-name skill in both sets, add one side to an exclusion list: $($clash -join ', ')" }
+    $clash += @($teamKitNames | Where-Object { ($pstackNames + $pocockNames) -contains $_ })
+    if ($clash.Count -gt 0) { Fail "same-name skill in two sets, add one side to an exclusion list: $($clash -join ', ')" }
     $dupPocock = @($pocockNames | Group-Object | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Name })
     if ($dupPocock.Count -gt 0) { Fail "same-name skill in two mattpocock-skills folders: $($dupPocock -join ', ')" }
 
@@ -208,6 +220,7 @@ try {
     New-Item -ItemType Directory -Path $SkillsDir -Force | Out-Null
     foreach ($s in $pstackSkills) { Install-Skill $s }
     foreach ($s in $pocockSkills) { Install-Skill $s }
+    foreach ($s in $teamKitSkills) { Install-Skill $s }
 
     # pstack docs/ -> ~/.claude/docs/ (overwrite same path, never delete, no archive)
     $docsSrc = Join-Path $pstackRoot 'docs'
@@ -238,7 +251,7 @@ try {
     }
 
     # Upstream-removed skills: never deleted, only reported.
-    $installed = @($pstackNames + $pocockNames | Sort-Object)
+    $installed = @($pstackNames + $pocockNames + $teamKitNames | Sort-Object)
     $stale = @()
     if (Test-Path -LiteralPath $ManifestPath) {
         foreach ($name in Get-Content -LiteralPath $ManifestPath) {
@@ -259,6 +272,7 @@ try {
     Write-Host ''
     Write-Host "pstack @ $($lock['pstack']): installed $($pstackSkills.Count) skills (excluded: $($PstackExclude -join ', '))"
     Write-Host "mattpocock-skills @ $($lock['mattpocock-skills']): installed $($pocockSkills.Count) skills (excluded: $($PocockExclude -join ', '))"
+    Write-Host "cursor-team-kit @ $($lock['pstack']): installed $($teamKitNames -join ', ')"
     Write-Host "docs: $docsCount files copied to $DocsDir"
     Write-Host "agents: $($agentNames -join ', ') copied to $AgentsDir"
     if ($userOnlyDone.Count -gt 0) {
