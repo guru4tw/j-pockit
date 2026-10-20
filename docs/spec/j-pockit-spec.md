@@ -129,7 +129,8 @@
   - 步驟 1 PASS。`_Owlery/parse_ps1.ps1` 只收 `H:\ALG_DevRepository`、`H:\ALG_GitDevRepository` 下的檔(回 ERR[4]),改用同邏輯(PSParser.Tokenize + Language.Parser)的 scratchpad 腳本驗,PARSE_OK;全檔 ASCII。
   - 步驟 2 PASS。`skills/` 共 83 個 SKILL.md = 55 + 25 + 3 個不碰的;封存 14 個到 `skills_archive/2026-10-20/`;`owl_check`、`plan-eng-review`、`writing-great-skills`、`commands/handoff.md` 的大小與 mtime 不變;docs 18 檔、agents 2 檔就位;`how/SKILL.md` 大小與上游 blob 相同(2839 bytes,LF 保留);`$env:TEMP\j-pockit` 已清。
   - 步驟 4 PASS。重跑封存 82 項(80 skill + 2 agent)到 `skills_archive/2026-10-20-2/`,結果同步驟 2。
-  - 步驟 3 未做(要開新 session)。步驟 5 未做(repo 還沒 `git init`,`git diff` 無從比對;且會把 lock 推到 main `88d4751`)。
+  - 步驟 5 PASS。先 `git init -b main`,initial commit `948b218`(lock = d457567 / v1.3.1),再跑 `-Update`:pstack → `88d47514b82e7c44f00f2b2a72ff6dd12158038c`(main HEAD),Pocock 仍是最新 tag `v1.3.1`;`git diff` 只有 `versions.lock` 的 pstack 一行。照新 lock 重裝 55 + 25,封存 82 項到 `skills_archive/2026-10-20-3/`,不碰的 4 檔大小與 mtime 不變。
+  - 步驟 3 未做(要開新 session)。
 
 ## Out of Scope
 
